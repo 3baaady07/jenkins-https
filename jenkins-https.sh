@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Email: $1"
+echo "Domain name: $2"
+
 curl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl > nginx.tmpl
 
 docker run --detach \
