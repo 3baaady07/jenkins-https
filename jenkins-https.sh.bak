@@ -38,9 +38,9 @@ docker run \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v blueocean-data:/var/jenkins_home \
   -v "$HOME":/home \
-  --env "VIRTUAL_HOST=$2" \
-  --env "LETSENCRYPT_HOST=$2" \
-  --env "VIRTUAL_PORT=8080" \
+  -e VIRTUAL_HOST=$2 \
+  -e LETSENCRYPT_HOST=$2 \
+  -e VIRTUAL_PORT=8080 \
   jenkinsci/blueocean
   
 docker logs blueocean
