@@ -9,7 +9,7 @@ curl https://raw.githubusercontent.com/3baaady07/jenkins-https/main/jenkins-http
 chmod 0755 jenkins-https.sh
 ```
 
-Then, the following command replacing values as needed:
+Then, run the following command replacing values as needed:
 ```
 ./jenkins-https.sh "example@email.tld" "subdomain.mydomain.tld" "jenkins-vol"
 ```
