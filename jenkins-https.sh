@@ -2,6 +2,7 @@
 
 echo "Email: $1"
 echo "Domain name: $2"
+echo "Jenkins volume name: $3"
 
 curl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl > nginx.tmpl
 
@@ -39,7 +40,7 @@ docker run \
   --rm \
   -u root \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v blueocean-data:/var/jenkins_home \
+  -v "$3":/var/jenkins_home \
   -v "$HOME":/home \
   --env "VIRTUAL_HOST=$2" \
   --env "LETSENCRYPT_HOST=$2" \
