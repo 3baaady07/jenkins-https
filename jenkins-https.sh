@@ -67,8 +67,8 @@ if [ $dockerInstalled == 1 ]; then
             --volumes-from nginx-proxy \
             -v /var/run/docker.sock:/var/run/docker.sock:ro \
             -v acme:/etc/acme.sh \
-            --env "NGINX_DOCKER_GEN_CONTAINER=nginx-proxy-gen" \
-            --env "DEFAULT_EMAIL=$1" \
+            --env NGINX_DOCKER_GEN_CONTAINER=nginx-proxy-gen \
+            --env DEFAULT_EMAIL=$1 \
             nginxproxy/acme-companion
 
         docker run \
@@ -77,9 +77,12 @@ if [ $dockerInstalled == 1 ]; then
             --detach \
             --privileged \
             --network-alias docker \
+            --env VIRTUAL_HOST=docker \
+            --env VIRTUAL_PORT=2376 \
+            --env NETWORK_ACCESS=internal \
             --env DOCKER_TLS_CERTDIR=/certs \
             -v jenkins-docker-certs:/certs/client \
-            -v "$volumeName":/var/jenkins_home \
+            -v $volumeName:/var/jenkins_home \
             --publish 2376:2376 \
             docker:dind \
             --storage-driver overlay2
@@ -90,13 +93,13 @@ if [ $dockerInstalled == 1 ]; then
             --name jenkins-blueocean \
             --restart=on-failure \
             --detach \
-            -v "$volumeName":/var/jenkins_home \
+            -v $volumeName:/var/jenkins_home \
             --env DOCKER_HOST=tcp://docker:2376 \
             --env DOCKER_CERT_PATH=/certs/client \
             --env DOCKER_TLS_VERIFY=1 \
-            --env "VIRTUAL_HOST=$2" \
-            --env "LETSENCRYPT_HOST=$2" \
-            --env "VIRTUAL_PORT=8080" \
+            --env VIRTUAL_HOST=$2 \
+            --env LETSENCRYPT_HOST=$2 \
+            --env VIRTUAL_PORT=8080 \
             --volume jenkins-docker-certs:/certs/client:ro \
             myjenkins-blueocean:2.346.1-1 
     fi
