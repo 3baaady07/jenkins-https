@@ -51,7 +51,6 @@ if [ $dockerInstalled == 1 ]; then
             -v vhost:/etc/nginx/vhost.d \
             -v html:/usr/share/nginx/html \
             -v certs:/etc/nginx/certs \
-            --network jenkins \
             nginx
 
         docker run --detach \
@@ -59,7 +58,6 @@ if [ $dockerInstalled == 1 ]; then
             --volumes-from nginx-proxy \
             -v $(pwd)/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro \
             -v /var/run/docker.sock:/tmp/docker.sock:ro \
-            --network jenkins \
             nginxproxy/docker-gen \
             -notify-sighup nginx-proxy -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
 
@@ -71,7 +69,6 @@ if [ $dockerInstalled == 1 ]; then
             -v acme:/etc/acme.sh \
             --env "NGINX_DOCKER_GEN_CONTAINER=nginx-proxy-gen" \
             --env "DEFAULT_EMAIL=$1" \
-            --network jenkins \
             nginxproxy/acme-companion
 
         docker run \
@@ -79,7 +76,6 @@ if [ $dockerInstalled == 1 ]; then
             --rm \
             --detach \
             --privileged \
-            --network jenkins \
             --network-alias docker \
             --env DOCKER_TLS_CERTDIR=/certs \
             -v jenkins-docker-certs:/certs/client \
@@ -94,7 +90,6 @@ if [ $dockerInstalled == 1 ]; then
             --name jenkins-blueocean \
             --restart=on-failure \
             --detach \
-            --network jenkins \
             -v "$volumeName":/var/jenkins_home \
             --env DOCKER_HOST=tcp://docker:2376 \
             --env DOCKER_CERT_PATH=/certs/client \
