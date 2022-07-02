@@ -39,6 +39,7 @@ if [ $dockerInstalled == 1 ]; then
         echo "Jenkins volume name: $volumeName"
         
         curl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl > nginx.tmpl
+        curl https://raw.githubusercontent.com/3baaady07/jenkins-https/main/Dockerfile > Dockerfile
 
         docker network create jenkins
 
