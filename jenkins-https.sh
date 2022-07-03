@@ -44,6 +44,8 @@ if [ $dockerInstalled == 1 ]; then
 
         chmod 0700 destroy.sh
 
+        ./destroy.sh
+
         docker network create jenkins
 
         docker run --detach \
