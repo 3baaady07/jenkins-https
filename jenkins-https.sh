@@ -86,7 +86,7 @@ if [ $dockerInstalled == 1 ]; then
             docker:dind \
             --storage-driver overlay2
 
-        docker build -t myjenkins-blueocean:2.346.1-1 .
+        docker build -t jenkins-blueocean:2.346.1-1 .
 
         docker run \
             --name jenkins-blueocean \
