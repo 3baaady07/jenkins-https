@@ -40,6 +40,9 @@ if [ $dockerInstalled == 1 ]; then
         
         curl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl > nginx.tmpl
         curl https://raw.githubusercontent.com/3baaady07/jenkins-https/main/Dockerfile > Dockerfile
+        curl https://raw.githubusercontent.com/3baaady07/jenkins-https/main/destroy.sh > destroy.sh
+
+        chmod 0700 destroy.sh
 
         docker network create jenkins
 
@@ -93,7 +96,7 @@ if [ $dockerInstalled == 1 ]; then
             --restart=on-failure \
             --detach \
             -v $volumeName:/var/jenkins_home \
-            --env DOCKER_HOST=tcp://docker:2375 \
+            --env DOCKER_HOST=tcp://docker:2376 \
             --env DOCKER_CERT_PATH=/certs/client \
             --env DOCKER_TLS_VERIFY=1 \
             --env VIRTUAL_HOST=$2 \
