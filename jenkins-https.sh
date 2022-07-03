@@ -77,13 +77,12 @@ if [ $dockerInstalled == 1 ]; then
             --detach \
             --privileged \
             --network-alias docker \
-            --env VIRTUAL_HOST=docker \
-            --env VIRTUAL_PORT=2376 \
+            --env VIRTUAL_PORT=2375 \
             --env NETWORK_ACCESS=internal \
             --env DOCKER_TLS_CERTDIR=/certs \
             -v jenkins-docker-certs:/certs/client \
             -v $volumeName:/var/jenkins_home \
-            --publish 2376:2376 \
+            --publish 2375:2375 \
             docker:dind \
             --storage-driver overlay2
 
@@ -94,7 +93,7 @@ if [ $dockerInstalled == 1 ]; then
             --restart=on-failure \
             --detach \
             -v $volumeName:/var/jenkins_home \
-            --env DOCKER_HOST=tcp://docker:2376 \
+            --env DOCKER_HOST=tcp://docker:2375 \
             --env DOCKER_CERT_PATH=/certs/client \
             --env DOCKER_TLS_VERIFY=1 \
             --env VIRTUAL_HOST=$2 \
