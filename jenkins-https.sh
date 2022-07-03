@@ -82,12 +82,10 @@ if [ $dockerInstalled == 1 ]; then
             --detach \
             --privileged \
             --network-alias docker \
-            --env VIRTUAL_PORT=2375 \
-            --env NETWORK_ACCESS=internal \
             --env DOCKER_TLS_CERTDIR=/certs \
             -v jenkins-docker-certs:/certs/client \
             -v $volumeName:/var/jenkins_home \
-            --publish 2375:2375 \
+            --publish 2376:2376 \
             docker:dind \
             --storage-driver overlay2
 
